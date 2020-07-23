@@ -1,0 +1,60 @@
+spring:  
+  zipkin: 
+    base-url: http://localhost:9411
+  sleuth: 
+    sampler:
+      percentage: 1.0
+  aop: 
+    auto: true
+    proxy-target-class: true
+  datasource:
+#      url: jdbc:mysql://localhost:3306/svw_account?useUnicode=true
+#      driver-class-name: com.mysql.jdbc.Driver
+#      username: root
+#      password: root
+#      hikari:
+#        maximumPoolSize: 10
+      type: com.alibaba.druid.pool.DruidDataSource
+      url: jdbc:mysql://localhost:3306/svw_account?useUnicode=true&allowMultiQueries=true&autoReconnect=true 
+      username: root
+      password: root
+      driverClassName: com.mysql.jdbc.Driver
+      #dataSource Pool configuration
+      initialSize: 5  #初始化连接数
+      minIdle: 5   #最小连接数
+      maxActive: 20 #最大连接数
+      maxWait: 60000
+      timeBetweenEvictionRunsMillis: 60000  #Destroy线程会检测连接的间隔时间 ，如果此时发现连接休眠时间已经大于minEvictableIdleTimeMillis，则关闭其连接
+      minEvictableIdleTimeMillis: 300000 #连接的休眠时间大于这个时间了，就可以被清除了
+      validationQuery: SELECT 1 FROM DUAL
+      testWhileIdle: true #当休眠时间大于minEvictableIdleTimeMillis，需要检查这时的连接是否可用（因为检查现成是按timeBetweenEvictionRunsMillis这个时间来检查的，下次执行的时间还没到，造成漏检的情况）
+      testOnBorrow: false
+      exceptionSorter: true
+      testOnReturn: false
+      poolPreparedStatements: false
+      filters: stat,wall,log4j
+      maxPoolPreparedStatementPerConnectionSize: 0
+      connectionProperties: druid.stat.mergeSql=false;druid.stat.slowSqlMillis=500
+      useGlobalDataSourceStat: true 
+    
+mybatis:                              
+  mapperLocations: classpath*:META-INF/com/svw/tbox/tcloud/account/mapper/*.xml
+  type-aliases-package: com.svw.tbox.tcloud.account.entity
+mapper:
+  mappers: 
+    - tk.mybatis.mapper.common.Mapper
+  not-empty: false
+  mapper.identity: MYSQL
+  
+  
+logging.level:
+  com.svw.tbox.tcloud.account.dao: debug
+  org.springframework.transaction: debug
+  
+elasticSearch:
+  hostlist: 192.168.202.128:9200
+  client:
+    connectNum: 10
+    connectPerRoute: 50  
+  
+  

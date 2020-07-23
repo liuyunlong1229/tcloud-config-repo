@@ -1,0 +1,45 @@
+#  rabbitmq:
+#    host: localhost
+#    port: 5672
+#    username: admin
+#    password: admin
+          
+pagehelper: 
+  helperDialect: mySql
+  reasonable: true
+  supportMethodsArguments: true
+  params: count=countSql
+  
+feign:
+  hystrix: 
+    enabled: true
+
+hystrix:  
+  threadpool:   
+    default:   
+      coreSize: 10 #并发执行的最大线程数，默认10 
+  command:  
+      default:  
+        execution:  
+          isolation:  
+            thread:  
+              timeoutInMilliseconds: 1000 
+        circuitBreaker: 
+        ##每秒3次请求
+        requestVolumeThreshold: 3
+    
+#设置启动就加载对应的feign,解决第一次请求超时的问题    
+ribbon:
+  eager-load:
+    enabled: true
+    clients: tcloud-account
+  OkToRetryOnAllOperations: false #对所有操作请求都进行重试,默认false
+  ReadTimeout: 10000   #负载均衡超时时间，默认值5000
+  ConnectTimeout: 2000 #ribbon请求连接的超时时间，默认值2000
+  MaxAutoRetries: 0     #对当前实例的重试次数，默认0
+  MaxAutoRetriesNextServer: 1 
+  
+
+        
+logging.level:
+  com.svw.tbox.tcloud: debug
