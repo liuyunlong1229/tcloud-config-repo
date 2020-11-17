@@ -1,0 +1,20 @@
+﻿zuul:
+  prefix: /mos
+  strip-prefix: true
+  routes:
+    account-service: #key ,value=ZuulRoute
+      path: /provider/**
+      url: http://localhost:18083
+    # service-id: aa
+    hi-service:
+      path: /consumer/**
+      url: http://localhost:18083/
+
+
+listOfServers:  http://localhost:8765
+
+dispatch:
+  dispatch-map:
+    hi-service:
+      - http://localhost:18083
+      - http://localhost:18084

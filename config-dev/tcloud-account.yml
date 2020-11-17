@@ -45,11 +45,7 @@ mapper:
     - tk.mybatis.mapper.common.Mapper
   not-empty: false
   mapper.identity: MYSQL
-  
-  
-logging.level:
-  com.svw.tbox.tcloud.account.dao: debug
-  org.springframework.transaction: debug
+
   
 elasticSearch:
   hostlist: 192.168.202.128:9200

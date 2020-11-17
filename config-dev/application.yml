@@ -23,7 +23,7 @@ hystrix:
         execution:  
           isolation:  
             thread:  
-              timeoutInMilliseconds: 1000 
+              timeoutInMilliseconds: 10000
         circuitBreaker: 
         ##每秒3次请求
         requestVolumeThreshold: 3
@@ -37,9 +37,16 @@ ribbon:
   ReadTimeout: 10000   #负载均衡超时时间，默认值5000
   ConnectTimeout: 2000 #ribbon请求连接的超时时间，默认值2000
   MaxAutoRetries: 0     #对当前实例的重试次数，默认0
-  MaxAutoRetriesNextServer: 1 
-  
-
+  MaxAutoRetriesNextServer: 1
         
 logging.level:
-  com.svw.tbox.tcloud: debug
+  com.lyl.tcloud: debug
+
+spring:
+  sleuth:
+    sampler:
+      percentage: 1
+  zipkin:
+    base-url: http://localhost:9411
+    enabled: true
+
